@@ -41,49 +41,55 @@ const PostForm = ({ post, action }: PostFormProps) => {
   });
 
   // Query
-  const { mutateAsync: createPost, isLoading: isLoadingCreate } =
-    useCreatePost();
-  const { mutateAsync: updatePost, isLoading: isLoadingUpdate } =
-    useUpdatePost();
+  const { mutateAsync: createPost, isLoading: isLoadingCreate } = useCreatePost();
+  const { mutateAsync: updatePost, isLoading: isLoadingUpdate } = useUpdatePost();
 
   // Handler
   const handleSubmit = async (value: z.infer<typeof PostValidation>) => {
-    // ACTION = UPDATE
-    if (post && action === "Update") {
-      const updatedPost = await updatePost({
+    try {
+      // ACTION = UPDATE
+      if (post && action === "Update") {
+        const updatedPost = await updatePost({
+          ...value,
+          postId: post.$id,
+          imageid: post.imageid,
+          imageUrl: post.imageUrl,
+        });
+
+        if (!updatedPost) {
+          toast({
+            title: `${action} post failed. Please try again.`,
+          });
+        }
+        return navigate(`/posts/${post.$id}`);
+      }
+
+      // ACTION = CREATE
+      const newPost = await createPost({
         ...value,
-        postId: post.$id,
-        imageId: post.imageId,
-        imageUrl: post.imageUrl,
+        userId: user.id,
       });
 
-      if (!updatedPost) {
+      if (!newPost) {
         toast({
           title: `${action} post failed. Please try again.`,
-        });
-      }
-      return navigate(`/posts/${post.$id}`);
-    }
 
-    // ACTION = CREATE
-    const newPost = await createPost({
-      ...value,
-      userId: user.id,
-    });
-
-    if (!newPost) {
-      toast({
-        title: `${action} post failed. Please try again.`,
-      });
+          });
+        }
+       
+      
+      navigate("/");
+    } catch (error) {
+      console.error("Failed. Error:", error);
     }
-    navigate("/");
   };
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
-        className="flex flex-col gap-9 w-full  max-w-5xl">
+        className="flex flex-col gap-9 w-full  max-w-5xl"
+      >
         <FormField
           control={form.control}
           name="caption"

@@ -9,11 +9,19 @@ type PostCardProps = {
   post: Models.Document;
 };
 
+// const PostCard = ({ post }: PostCardProps) => {
+//   const { user } = useUserContext();
+
+//   if (!post.creator) return;
 const PostCard = ({ post }: PostCardProps) => {
   const { user } = useUserContext();
 
-  if (!post.creator) return;
+  if (!post.creator) {
+    console.error("Invalid post:", post);
+    return null;
+  }
 
+  
   return (
     <div className="post-card">
       <div className="flex-between">

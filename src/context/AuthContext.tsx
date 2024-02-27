@@ -13,6 +13,7 @@ export const INITIAL_USER = {
   bio: "",
 };
 
+
 const INITIAL_STATE = {
   user: INITIAL_USER,
   isLoading: false,
@@ -21,6 +22,7 @@ const INITIAL_STATE = {
   setIsAuthenticated: () => {},
   checkAuthUser: async () => false as boolean,
 };
+
 
 type IContextType = {
   user: IUser;

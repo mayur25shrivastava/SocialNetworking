@@ -22,7 +22,7 @@ export async function createUserAccount(user: INewUser) {
     const avatarUrl = avatars.getInitials(user.name);
 
     const newUser = await saveUserToDB({
-      accountId: newAccount.$id,
+      accountid: newAccount.$id,
       name: newAccount.name,
       email: newAccount.email,
       username: user.username,
@@ -38,7 +38,7 @@ export async function createUserAccount(user: INewUser) {
 
 // ============================== SAVE USER TO DB
 export async function saveUserToDB(user: {
-  accountId: string;
+  accountid: string;
   email: string;
   name: string;
   imageUrl: URL;
@@ -90,7 +90,7 @@ export async function getCurrentUser() {
     const currentUser = await databases.listDocuments(
       appwriteConfig.databaseId,
       appwriteConfig.userCollectionId,
-      [Query.equal("accountId", currentAccount.$id)]
+      [Query.equal("accountid", currentAccount.$id)]
     );
 
     if (!currentUser) throw Error;
@@ -144,7 +144,7 @@ export async function createPost(post: INewPost) {
         creator: post.userId,
         caption: post.caption,
         imageUrl: fileUrl,
-        imageId: uploadedFile.$id,
+        imageid: uploadedFile.$id,
         location: post.location,
         tags: tags,
       }
@@ -272,7 +272,7 @@ export async function updatePost(post: IUpdatePost) {
   try {
     let image = {
       imageUrl: post.imageUrl,
-      imageId: post.imageId,
+      imageid: post.imageid,
     };
 
     if (hasFileToUpdate) {
@@ -287,7 +287,7 @@ export async function updatePost(post: IUpdatePost) {
         throw Error;
       }
 
-      image = { ...image, imageUrl: fileUrl, imageId: uploadedFile.$id };
+      image = { ...image, imageUrl: fileUrl, imageid: uploadedFile.$id };
     }
 
     // Convert tags into array
@@ -301,7 +301,7 @@ export async function updatePost(post: IUpdatePost) {
       {
         caption: post.caption,
         imageUrl: image.imageUrl,
-        imageId: image.imageId,
+        imageid: image.imageid,
         location: post.location,
         tags: tags,
       }
@@ -311,7 +311,7 @@ export async function updatePost(post: IUpdatePost) {
     if (!updatedPost) {
       // Delete new file that has been recently uploaded
       if (hasFileToUpdate) {
-        await deleteFile(image.imageId);
+        await deleteFile(image.imageid);
       }
 
       // If no new file uploaded, just throw error
@@ -320,7 +320,7 @@ export async function updatePost(post: IUpdatePost) {
 
     // Safely delete old file after successful update
     if (hasFileToUpdate) {
-      await deleteFile(post.imageId);
+      await deleteFile(post.imageid);
     }
 
     return updatedPost;
@@ -330,8 +330,8 @@ export async function updatePost(post: IUpdatePost) {
 }
 
 // ============================== DELETE POST
-export async function deletePost(postId?: string, imageId?: string) {
-  if (!postId || !imageId) return;
+export async function deletePost(postId?: string, imageid?: string) {
+  if (!postId || !imageid) return;
 
   try {
     const statusCode = await databases.deleteDocument(
@@ -342,7 +342,7 @@ export async function deletePost(postId?: string, imageId?: string) {
 
     if (!statusCode) throw Error;
 
-    await deleteFile(imageId);
+    await deleteFile(imageid);
 
     return { status: "Ok" };
   } catch (error) {
@@ -493,7 +493,7 @@ export async function updateUser(user: IUpdateUser) {
   try {
     let image = {
       imageUrl: user.imageUrl,
-      imageId: user.imageId,
+      imageid: user.imageid,
     };
 
     if (hasFileToUpdate) {
@@ -508,7 +508,7 @@ export async function updateUser(user: IUpdateUser) {
         throw Error;
       }
 
-      image = { ...image, imageUrl: fileUrl, imageId: uploadedFile.$id };
+      image = { ...image, imageUrl: fileUrl, imageid: uploadedFile.$id };
     }
 
     //  Update user
@@ -520,7 +520,7 @@ export async function updateUser(user: IUpdateUser) {
         name: user.name,
         bio: user.bio,
         imageUrl: image.imageUrl,
-        imageId: image.imageId,
+        imageid: image.imageid,
       }
     );
 
@@ -528,15 +528,15 @@ export async function updateUser(user: IUpdateUser) {
     if (!updatedUser) {
       // Delete new file that has been recently uploaded
       if (hasFileToUpdate) {
-        await deleteFile(image.imageId);
+        await deleteFile(image.imageid);
       }
       // If no new file uploaded, just throw error
       throw Error;
     }
 
     // Safely delete old file after successful update
-    if (user.imageId && hasFileToUpdate) {
-      await deleteFile(user.imageId);
+    if (user.imageid && hasFileToUpdate) {
+      await deleteFile(user.imageid);
     }
 
     return updatedUser;

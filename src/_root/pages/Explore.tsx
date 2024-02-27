@@ -11,6 +11,7 @@ export type SearchResultProps = {
   searchedPosts: any;
 };
 
+
 const SearchResults = ({ isSearchFetching, searchedPosts }: SearchResultProps) => {
   if (isSearchFetching) {
     return <Loader />;
@@ -22,6 +23,7 @@ const SearchResults = ({ isSearchFetching, searchedPosts }: SearchResultProps) =
     );
   }
 };
+
 
 const Explore = () => {
   const { ref, inView } = useInView();
@@ -44,9 +46,11 @@ const Explore = () => {
       </div>
     );
 
+
   const shouldShowSearchResults = searchValue !== "";
   const shouldShowPosts = !shouldShowSearchResults && 
     posts.pages.every((item) => item.documents.length === 0);
+
 
   return (
     <div className="explore-container">
@@ -100,6 +104,7 @@ const Explore = () => {
           ))
         )}
       </div>
+
 
       {hasNextPage && !searchValue && (
         <div ref={ref} className="mt-10">

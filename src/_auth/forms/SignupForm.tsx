@@ -36,42 +36,37 @@ const SignupForm = () => {
   const handleSignup = async (user: z.infer<typeof SignupValidation>) => {
     try {
       const newUser = await createUserAccount(user);
-
+  
       if (!newUser) {
-        toast({ title: "Sign up failed. Please try again.", });
-        
+        toast({ title: "Sign up failed. Please try again." });
         return;
       }
-
+  
       const session = await signInAccount({
         email: user.email,
         password: user.password,
       });
-
+  
       if (!session) {
-        toast({ title: "Something went wrong. Please login your new account", });
-        
+        toast({ title: "Something went wrong. Please login to your new account" });
         navigate("/sign-in");
-        
         return;
       }
-
+  
       const isLoggedIn = await checkAuthUser();
-
+  
       if (isLoggedIn) {
         form.reset();
-
         navigate("/");
       } else {
-        toast({ title: "Login failed. Please try again.", });
-        
+        toast({ title: "Login failed. Please try again." });
         return;
       }
     } catch (error) {
-      console.log({ error });
+      // Log specific error information
+      console.error("Signup failed. Error:", error);
     }
   };
-
   return (
     <Form {...form}>
       <div className="sm:w-420 flex-center flex-col">
