@@ -51,9 +51,6 @@ export const useSignOutAccount = () => {
   });
 };
 
-// ============================================================
-// POST QUERIES
-// ============================================================
 
 export const useGetPosts = () => {
   return useInfiniteQuery({
