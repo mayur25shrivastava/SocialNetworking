@@ -73,7 +73,7 @@
 // };
 
 // export default Home;
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Toast } from 'react-bootstrap'; // Import Toast component from react-bootstrap
 
 import { Models } from "appwrite";
@@ -81,15 +81,15 @@ import { Loader, PostCard, UserCard } from "@/components/shared";
 import { useGetRecentPosts, useGetUsers } from "@/lib/react-query/queries";
 
 import Button from 'react-bootstrap/Button';
-import { Route } from 'react-router-dom';
+
 
 const Home = () => {
-  const [showToast, setShowToast] = useState(true);
+
   const [showA, setShowA] = useState(true);
-  const [showB, setShowB] = useState(true);
+  
 
   const toggleShowA = () => setShowA(!showA);
-  const toggleShowB = () => setShowB(!showB);
+
 
   const { data: posts, isLoading: isPostLoading, isError: isErrorPosts } = useGetRecentPosts();
   const { data: creators, isLoading: isUserLoading, isError: isErrorCreators } = useGetUsers(10);
