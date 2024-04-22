@@ -3,13 +3,11 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
-    
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
@@ -21,6 +19,7 @@
     "@tanstack/react-query-devtools": "^4.35.7",
     "appwrite": "^13.0.0",
     "attr-accept": "^2.2.2",
+    "bootstrap": "^5.3.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "eslint-config-prettier": "^9.0.0",
@@ -29,6 +28,7 @@
     "lucide-react": "^0.279.0",
     "prettier": "^3.0.3",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.10.2",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.47.0",
