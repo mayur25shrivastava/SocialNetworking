@@ -140,9 +140,10 @@ const Home = () => {
           </ul>
         )}
         <div className="addd my-4">
-     <a target='_blank'
-            rel='noopener noreferrer' href="https://ubiquitous-doodle-4rpr7g445v43p5-5000.app.github.dev/">Security Scan</a>
-        
+          
+        <a target='_blank' rel='noopener noreferrer' href="https://ubiquitous-doodle-4rpr7g445v43p5-5000.app.github.dev/">
+  <button type="button" className="aq" style={{ display: 'inline-block', padding: '10px 20px', backgroundColor: '#43A6C6', color: '#fff', textAlign: 'center', textDecoration: 'none', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px', fontWeight: 'bold' }}>Security Scan</button>
+</a>
         </div>
       </div>
       
